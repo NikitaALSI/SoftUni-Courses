@@ -1,5 +1,5 @@
 beach_string = input().lower()
-count = 1
+count = 0
 
 if 'sand' in beach_string:
     count += beach_string.count('sand')
