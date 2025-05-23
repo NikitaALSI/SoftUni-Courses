@@ -14,6 +14,3 @@ def happy_year(year):
 current_year = int(input())
 happy_year_gen = happy_year(current_year)
 print(next(happy_year_gen))
-
-
-
