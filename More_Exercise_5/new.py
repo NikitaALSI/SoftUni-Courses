@@ -23,22 +23,31 @@ for i in range(rows):
     row = [char for char in input()]
     maze.append(row)
     if "k" in row:
-        k_position = [(i, row.index("k"))]
+        k_position = (i, row.index("k"))
 
 
-moves = [0]
-moves.append(k_position)
-
-print(moves[-1])
+moves = [k_position]
+index = 0
+way_out = False
+steps_for_out = []
 while True:
-    for i in moves[-1]:
-        if len(moves[-1]) > 1:
-            for pos in i:
-                current_moves = check_next(maze, pos)
-                moves.append(current_moves)
-        else:
-            current_moves = check_next(maze, i)
-            moves.append(current_moves)
+    position = 0
+    if len(moves) > 1:
+        position = moves[index][-1]
+    else:
+        position = moves[-1]
+
+    if position[0] == 0 or position[0] == len(maze) or position[1] == 0 or position[1] == len(maze[0]):
+        way_out = True
+        index += 1
+        continue
+    current_moves = check_next(maze, moves[index])
+    if not current_moves:
+        moves[index].append(["no"])
+        index += 1
+    moves = [moves.append(moves) for moves in range(len(current_moves))]
+    for z in range(len(current_moves)):
+        moves[z] += current_moves[z]
 
 if way_out:
     print(f"Kate got out in {max(moves)} moves")
