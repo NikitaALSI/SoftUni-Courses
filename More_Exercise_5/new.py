@@ -27,30 +27,39 @@ for i in range(rows):
 
 
 moves = [k_position]
-index = 0
-way_out = False
-steps_for_out = []
+break_steps = 0
+other = []
+steps_for_win = []
+no_way_out = False
 while True:
-    position = 0
-    if len(moves) > 1:
-        position = moves[index][-1]
-    else:
-        position = moves[-1]
-
-    if position[0] == 0 or position[0] == len(maze) or position[1] == 0 or position[1] == len(maze[0]):
-        way_out = True
-        index += 1
-        continue
-    current_moves = check_next(maze, moves[index])
+    position = moves[-1]
+    if position[0] == 0 or position[0] == len(maze)-1 or position[1] == 0 or position[1] == len(maze[0])-1:
+        if other:
+            steps_for_win.append(len(moves) + break_steps)
+            moves = other[0]
+            other.pop(0)
+            continue
+        else:
+            steps_for_win.append(break_steps + len(moves))
+            break
+    current_moves = check_next(maze, moves[-1])
     if not current_moves:
-        moves[index].append(["no"])
-        index += 1
-    moves = [moves.append(moves) for moves in range(len(current_moves))]
-    for z in range(len(current_moves)):
-        moves[z] += current_moves[z]
+        if not other:
+            no_way_out = True
+            break
+        moves = other[0]
+        other.pop(0)
+        continue
+    if len(current_moves) > 1:
+        moves.append(current_moves[0])
+        other.append(current_moves[1::])
+        break_steps = len(moves)
+    else:
+        moves.append(current_moves[0])
 
-if way_out:
-    print(f"Kate got out in {max(moves)} moves")
+
+if steps_for_win:
+    print(f"Kate got out in {max(steps_for_win)} moves")
 else:
     print("Kate cannot get out")
 
@@ -58,7 +67,7 @@ else:
 6
 # #####
 #  ####
-## k###
+## k
+##  ###
 ### ###
-### ###
-### ###
+#######

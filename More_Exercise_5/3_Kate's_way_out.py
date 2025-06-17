@@ -1,18 +1,18 @@
 def check_next(matrix, position):
     positions = []
     if matrix[position[0] - 1][position[1]] == " ":
-
+        matrix[position[0] - 1][position[1]] = "."
         positions.append((position[0] - 1, position[1]))
     if matrix[position[0]][position[1] - 1] == " ":
-
+        matrix[position[0]][position[1] - 1] = "."
         positions.append((position[0], position[1] - 1))
     if matrix[position[0]][position[1] + 1] == " ":
-
+        matrix[position[0]][position[1] + 1] = "."
         positions.append((position[0], position[1] + 1))
     if matrix[position[0] + 1][position[1]] == " ":
-
+        matrix[position[0] + 1][position[1]] = "."
         positions.append((position[0] + 1, position[1]))
-    return positions
+    return positions, matrix
 
 
 rows = int(input())
@@ -31,9 +31,9 @@ new_moves = 0
 position = k_position
 current_maze = maze[:]
 while True:
-    ways = len(check_next(maze, position))
-    if ways > 1:
-        new_moves = current_moves
+    ways, current_maze = check_next(current_maze, position)
+    if len(ways) > 1:
+        current_maze = current_maze
 
     if current_maze[position[0] - 1][position[1]] == " ":
         current_maze[position[0] - 1][position[1]] = "."
@@ -53,7 +53,9 @@ while True:
 
     current_moves += 1
 
+
     if any(map(lambda x: x[0] == "." or x[-1] == ".", current_maze[1:len(current_maze) - 1])) or "." in current_maze[0] or "." in current_maze[-1]:
+        if ways:
         for row in range(len(maze)):
             for col in range(len(maze[0])):
                 if maze[row][col] == " ":
@@ -62,3 +64,7 @@ while True:
         print(f"Kate got out in {max(new_moves, current_moves)} moves")
         break
 
+
+
+
+#
