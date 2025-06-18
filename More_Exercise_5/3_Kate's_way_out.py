@@ -56,10 +56,10 @@ while True:
 
     if any(map(lambda x: x[0] == "." or x[-1] == ".", current_maze[1:len(current_maze) - 1])) or "." in current_maze[0] or "." in current_maze[-1]:
         if ways:
-        for row in range(len(maze)):
-            for col in range(len(maze[0])):
-                if maze[row][col] == " ":
-                    new_moves += 1
+            for row in range(len(maze)):
+                for col in range(len(maze[0])):
+                    if maze[row][col] == " ":
+                        new_moves += 1
 
         print(f"Kate got out in {max(new_moves, current_moves)} moves")
         break
